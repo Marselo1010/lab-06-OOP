@@ -4,6 +4,7 @@ import it.unibo.exceptions.fakenetwork.api.NetworkComponent;
 import it.unibo.exceptions.fakenetwork.impl.ServiceBehindUnstableNetwork;
 
 import java.io.PrintStream;
+import java.io.IOException;
 
 import static it.unibo.exceptions.arithmetic.ArithmeticService.DIVIDED;
 import static it.unibo.exceptions.arithmetic.ArithmeticService.MINUS;
@@ -44,18 +45,40 @@ public final class UseArithmeticService {
     }
 
     private static void retrySendOnNetworkError(final NetworkComponent server, final String message) {
-        /*
-         * This method should re-try to send message to the provided server, catching all IOExceptions,
-         * until it succeeds.
-         */
+            /*
+            * This method should re-try to send message to the provided server, catching all IOExceptions,
+            * until it succeeds.
+            */
+            boolean sent = false;
+            while (!sent) { 
+                try {
+                    server.sendData(message);
+                    sent = true;
+                } catch (final IOException e) {
+                        System.out.println("messaggio non inviato - Errore IOException -> " + e.toString() );
+                }
+            }    
     }
+           
 
     private static String retryReceiveOnNetworkError(final NetworkComponent server) {
         /*
          * This method should re-try to retrieve information from the provided server, catching all IOExceptions,
          * until it succeeds.
          */
-        return null;
+       
+        boolean received = false;
+        String response = null;
+            while (!received) { 
+                try {
+                    response = server.receiveResponse();
+                    received = true;
+                } catch (final IOException e) {
+                        System.out.println("Messaggio non ricevuto - Errore IOException -> " + e.toString() );
+                }
+            } 
+
+        return response;
     }
 
     private static void assertEqualsAsDouble(final String expected, final String actual) {
