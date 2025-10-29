@@ -2,6 +2,8 @@ package it.unibo.exceptions.fakenetwork.impl;
 
 import it.unibo.exceptions.arithmetic.ArithmeticService;
 import it.unibo.exceptions.fakenetwork.api.NetworkComponent;
+import it.unibo.exceptions.fakenetwork.impl.NetworkException;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
